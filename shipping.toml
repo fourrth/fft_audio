@@ -1,0 +1,58 @@
+# fft_audio shipping matrix.
+#
+# Run all jobs:             cargo run -p fft_shipping
+# List jobs:                cargo run -p fft_shipping -- --list
+# Run selected jobs:        cargo run -p fft_shipping -- --job headless --job headless-python
+# Dry-run:                  cargo run -p fft_shipping -- --dry-run
+# Use another cargo command: cargo run -p fft_shipping -- --command check --no-fetch
+#
+# Binaries are copied to <out_dir>/<job>/<bin>. Cargo artifacts live under
+# <target_dir>/<profile>/.
+
+profile = "release"
+command = "build"
+target_dir = "target/shipping"
+out_dir = "dist"
+fetch = true
+copy_binaries = true
+
+[[jobs]]
+name = "desktop-tauri-python"
+package = "fft_desktop"
+no_default_features = true
+features = ["tauri_python"]
+bins = ["fft_desktop"]
+
+[[jobs]]
+name = "desktop-tauri"
+package = "fft_desktop"
+no_default_features = true
+features = ["tauri"]
+bins = ["fft_desktop"]
+
+[[jobs]]
+name = "headless"
+package = "fft_desktop"
+no_default_features = true
+features = ["http"]
+bins = ["fft_desktop"]
+
+[[jobs]]
+name = "headless-python"
+package = "fft_desktop"
+no_default_features = true
+features = ["http", "python"]
+bins = ["fft_desktop"]
+
+[[jobs]]
+name = "cli-python"
+package = "fft_desktop"
+no_default_features = true
+features = ["python"]
+bins = ["fft_desktop"]
+
+[[jobs]]
+name = "cli-inert"
+package = "fft_desktop"
+no_default_features = true
+bins = ["fft_desktop"]

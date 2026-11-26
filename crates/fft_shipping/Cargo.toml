@@ -1,0 +1,17 @@
+[package]
+name = "fft_shipping"
+version = "0.1.0"
+edition = "2021"
+description = "Shipping matrix and cargo command runner for fft_audio"
+
+[[bin]]
+name = "fft_shipping"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+
+[dev-dependencies]
+tempfile = "3"

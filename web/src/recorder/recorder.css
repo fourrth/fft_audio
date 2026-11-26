@@ -1,0 +1,105 @@
+.recorder-panel {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.recorder-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 480px;
+  text-align: center;
+}
+
+.record-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 22px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--anim-ms) ease, border-color var(--anim-ms) ease;
+}
+
+.record-button:hover:not(:disabled) {
+  background: var(--bg-hover);
+  border-color: var(--accent-primary);
+}
+
+.record-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.record-dot {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--status-error-fg);
+}
+
+.record-button.recording {
+  border-color: var(--status-error-fg);
+  background: var(--status-error-bg);
+  color: var(--status-error-fg);
+}
+
+.record-button.recording .record-dot {
+  animation: recorder-pulse 1.2s ease-in-out infinite;
+}
+
+.recorder-clock {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.recorder-device {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.recorder-hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.recorder-error {
+  width: min(560px, 100%);
+  margin-top: 12px;
+}
+
+@keyframes recorder-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .record-button {
+    transition: none;
+  }
+
+  .record-button.recording .record-dot {
+    animation: none;
+  }
+}

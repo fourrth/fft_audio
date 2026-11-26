@@ -1,0 +1,38 @@
+[package]
+name = "fft_tauri_adapter"
+version = "0.1.0"
+edition = "2021"
+description = "Tauri IPC adapter and GUI-mode root leaser that drives an FftApp through scoped leases"
+
+[features]
+default = []
+# Enables the Python engine wiring and the scripting UI capability. The
+# language-neutral ScriptRunner/FftScript seam is always available.
+python = ["dep:fft_python_adapter", "fft_python_adapter/python"]
+
+[lints.cargo]
+unused_dependencies = "allow"
+
+[dependencies]
+base64 = "0.22"
+fft_app = { path = "../fft_app" }
+fft_app_host = { path = "../fft_app_host" }
+fft_core = { path = "../fft_core" }
+fft_runtime = { path = "../fft_runtime" }
+image = { version = "0.25", default-features = false, features = ["png"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-fs = "2"
+tauri-plugin-opener = "2"
+
+# Language-neutral scripting contract used by the injected engine.
+fft_script = { path = "../fft_script" }
+# Optional: the embedded Python engine lives in its own adapter and receives the
+# root-minted scripting lease. The default build stays Python-free.
+fft_python_adapter = { path = "../fft_python_adapter", optional = true, default-features = false }
+
+[dev-dependencies]
+fft_test = { path = "../fft_test" }
+tempfile = "3"

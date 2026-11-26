@@ -1,0 +1,24 @@
+[package]
+name = "fft_benchmarks"
+version = "0.1.0"
+edition = "2021"
+description = "Criterion benchmarks for fft_audio DSP internals"
+publish = false
+
+[features]
+default = []
+# Adds the NumPy comparison benchmarks. Requires Python development headers.
+python = ["dep:pyo3", "dep:numpy"]
+
+[[bench]]
+name = "fft"
+harness = false
+
+[dependencies]
+fft_core = { path = "../fft_core" }
+numpy = { version = "0.30", optional = true }
+pyo3 = { version = "0.30.1", features = ["auto-initialize"], optional = true }
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+realfft = "3"

@@ -1,0 +1,15 @@
+[package]
+name = "fft_script"
+version = "0.1.0"
+edition = "2021"
+description = "Language-neutral scripting contracts for fft_audio"
+
+[dependencies]
+fft_core = { path = "../fft_core" }
+fft_runtime = { path = "../fft_runtime" }
+fft_app = { path = "../fft_app" }
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+fft_test = { path = "../fft_test" }
+serde_json = "1"

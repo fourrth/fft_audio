@@ -1,0 +1,523 @@
+.spectrogram-view {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-canvas);
+}
+
+.spectrogram-tracking {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: min(60%, calc(100% - 260px));
+  pointer-events: none;
+}
+
+.spectrogram-tracking span,
+.spectrogram-scales span {
+  padding: 3px 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-card) 88%, transparent);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.spectrogram-scales {
+  position: absolute;
+  top: 8px;
+  right: 66px;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+  max-width: calc(100% - 130px);
+  pointer-events: none;
+}
+
+.spectrogram-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+.plot-surface {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) 18px;
+  overflow: hidden;
+  background: var(--bg-canvas);
+}
+
+.axis-gutter {
+  position: relative;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  user-select: none;
+}
+
+.axis-freq {
+  grid-column: 1;
+  grid-row: 1;
+  overflow: visible;
+  border-right: 1px solid var(--border-subtle);
+  background: var(--bg-panel);
+}
+
+.axis-time {
+  grid-column: 2;
+  grid-row: 2;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-panel);
+}
+
+.axis-unit {
+  position: absolute;
+  z-index: 1;
+  color: var(--text-muted);
+  font-size: 8px;
+  opacity: 0.8;
+}
+
+.axis-freq .axis-unit {
+  top: 2px;
+  left: 4px;
+}
+
+.axis-tick {
+  position: absolute;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.axis-tick-freq {
+  right: 6px;
+  transform: translateY(50%);
+}
+
+.axis-tick-time {
+  top: 3px;
+  transform: translateX(-50%);
+}
+
+.axis-corner {
+  grid-column: 1;
+  grid-row: 2;
+  padding: 2px 4px;
+  border-top: 1px solid var(--border-subtle);
+  border-right: 1px solid var(--border-subtle);
+  background: var(--bg-panel);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  opacity: 0.8;
+}
+
+.plot-host {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.plot-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.spectrogram-overlays {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.spectrogram-line-cut,
+.spectrogram-line-hit {
+  pointer-events: stroke;
+}
+
+.spectrogram-line-handle {
+  pointer-events: all;
+}
+
+.spectrogram-grid-line {
+  stroke: color-mix(in srgb, var(--text-primary) 16%, transparent);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+  pointer-events: none;
+}
+
+.spectrogram-data-frame {
+  shape-rendering: crispEdges;
+  pointer-events: none;
+}
+
+.spectrogram-region {
+  position: absolute;
+  z-index: 3;
+  border: 1px solid var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 18%, transparent);
+  pointer-events: none;
+}
+
+.crosshair {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--text-primary) 70%, transparent);
+}
+
+.crosshair-x {
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.crosshair-y {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+.readout-card {
+  position: absolute;
+  z-index: 4;
+  min-width: 170px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--bg-card) 92%, transparent);
+  box-shadow: var(--shadow-pop);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------- color bar --- */
+
+.colorbar {
+  position: relative;
+  flex: none;
+  width: 58px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-left: 1px solid var(--border-subtle);
+  background: var(--bg-panel);
+  user-select: none;
+  touch-action: none;
+}
+
+.colorbar-top {
+  flex: none;
+  min-height: 16px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 4px 0;
+}
+
+.colorbar-value {
+  flex: 1;
+  min-width: 0;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.colorbar-value-max {
+  padding-left: 12px;
+}
+
+.colorbar-reset {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--bg-card) 80%, transparent);
+  color: var(--text-muted);
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.colorbar-reset:hover:not(:disabled) {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.colorbar-reset:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.colorbar-track {
+  position: relative;
+  flex: 1 1 auto;
+  width: 30px;
+  min-height: 40px;
+  margin: 9px auto 8px;
+}
+
+.colorbar-gradient {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 2px;
+}
+
+.colorbar-outside {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: rgb(3 5 9 / 62%);
+  pointer-events: none;
+}
+
+.colorbar-outside-top {
+  top: 0;
+  border-radius: 2px 2px 0 0;
+}
+
+.colorbar-outside-bottom {
+  bottom: 0;
+  border-radius: 0 0 2px 2px;
+}
+
+.colorbar-selection {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding: 0;
+  appearance: none;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--text-primary) 55%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 55%, transparent);
+  background: transparent;
+  pointer-events: auto;
+  cursor: ns-resize;
+  touch-action: none;
+}
+
+.colorbar-selection:focus-visible {
+  outline: 1px solid var(--accent-primary);
+  outline-offset: -1px;
+}
+
+.colorbar-handle {
+  position: absolute;
+  left: 50%;
+  width: 30px;
+  height: 14px;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border: 0;
+  background: transparent;
+  cursor: ns-resize;
+  z-index: 2;
+}
+
+.colorbar-handle-grip {
+  display: block;
+  width: 24px;
+  height: 8px;
+  margin: 0 auto;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  background: var(--bg-card);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 40%);
+}
+
+.colorbar-handle:hover .colorbar-handle-grip,
+.colorbar-handle:focus-visible .colorbar-handle-grip {
+  border-color: var(--accent-primary);
+  background: var(--bg-active);
+}
+
+.colorbar-value-min {
+  flex: none;
+  padding: 0 2px;
+}
+
+.colorbar-unit {
+  flex: none;
+  padding: 0 2px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.colorbar-live {
+  flex: none;
+  padding: 0 2px 3px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+/* ------------------------------------------------------------------ minimap --- */
+
+.minimap {
+  position: relative;
+  flex: none;
+  height: 36px;
+  margin-right: 58px;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--bg-panel);
+  cursor: pointer;
+  touch-action: none;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 180ms ease;
+}
+
+.minimap[data-visible="false"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.minimap canvas {
+  display: block;
+  width: 100%;
+  height: 36px;
+  opacity: 0.75;
+}
+
+.minimap-view {
+  position: absolute;
+  z-index: 2;
+  border: 1px solid var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+}
+
+.minimap-view:active {
+  cursor: grabbing;
+}
+
+.minimap-label {
+  position: absolute;
+  left: 6px;
+  bottom: 2px;
+  z-index: 3;
+  padding: 1px 4px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--bg-canvas) 70%, transparent);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  pointer-events: none;
+}
+
+.minimap-nudge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 4;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--bg-card) 80%, transparent);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.minimap-nudge:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+@media (max-width: 600px) {
+  .colorbar {
+    width: 36px;
+  }
+
+  .colorbar-track {
+    width: 22px;
+  }
+
+  .colorbar-handle {
+    width: 22px;
+  }
+
+  .colorbar-value-max {
+    padding-left: 0;
+  }
+
+  .colorbar-reset {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .spectrogram-scales {
+    right: 44px;
+    max-width: calc(100% - 88px);
+  }
+
+  .minimap {
+    margin-right: 36px;
+  }
+
+  .readout-card {
+    min-width: 140px;
+    font-size: 9px;
+  }
+}

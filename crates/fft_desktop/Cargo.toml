@@ -1,0 +1,80 @@
+[package]
+name = "fft_desktop"
+version = "0.13.0"
+edition = "2021"
+description = "Unified fft_audio product binary: root leaser and adapter composition"
+default-run = "fft_desktop"
+
+[[bin]]
+name = "fft_desktop"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [], optional = true }
+
+[features]
+# Shipping default: the desktop GUI with embedded Python scripting.
+default = ["tauri_python"]
+# Marker for builds that serve the Vite frontend. The build script only builds
+# web/dist when this is enabled and the assets are stale.
+webui = []
+http = ["dep:fft_http_adapter", "dep:tokio", "webui"]
+python = ["dep:fft_python_adapter", "fft_python_adapter/python", "dep:fft_script"]
+# Embed web/dist for normal cargo runs and production GUI builds. Tauri uses
+# its dev URL when this is absent, which yields a connection-refused error if no
+# Vite dev server is running.
+custom-protocol = ["tauri?/custom-protocol"]
+# GUI frontend selection. `tauri` and `tauri_python` are mutually exclusive;
+# both select the same Tauri adapter crate, with scripting disabled/enabled.
+tauri = [
+    "dep:fft_tauri_adapter",
+    "dep:tauri-build",
+    "dep:tauri",
+    "dep:tauri-plugin-dialog",
+    "dep:tauri-plugin-fs",
+    "dep:tauri-plugin-opener",
+    "dep:webkit2gtk",
+    "webui",
+    "custom-protocol",
+]
+tauri_python = [
+    "dep:fft_tauri_adapter",
+    "fft_tauri_adapter/python",
+    "dep:tauri-build",
+    "dep:fft_python_adapter",
+    "dep:fft_script",
+    "dep:tauri",
+    "dep:tauri-plugin-dialog",
+    "dep:tauri-plugin-fs",
+    "dep:tauri-plugin-opener",
+    "dep:webkit2gtk",
+    "webui",
+    "custom-protocol",
+]
+
+[lints.cargo]
+unused_dependencies = "allow"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+fft_app = { path = "../fft_app" }
+fft_app_host = { path = "../fft_app_host" }
+fft_core = { path = "../fft_core", features = ["tables-parquet", "tables-arrow"] }
+fft_runtime = { path = "../fft_runtime" }
+fft_http_adapter = { path = "../fft_http_adapter", optional = true }
+fft_python_adapter = { path = "../fft_python_adapter", optional = true, default-features = false }
+fft_script = { path = "../fft_script", optional = true }
+fft_tauri_adapter = { path = "../fft_tauri_adapter", optional = true }
+tauri = { version = "2", features = [], optional = true }
+tauri-plugin-dialog = { version = "2", optional = true }
+tauri-plugin-fs = { version = "2", optional = true }
+tauri-plugin-opener = { version = "2", optional = true }
+tokio = { version = "1", features = ["rt-multi-thread", "signal", "time", "net"], optional = true }
+
+# Microphone capture in the Tauri WebView needs WebKitGTK's media-stream setting
+# and a permission handler; the GUI features enable this dependency.
+[target.'cfg(target_os = "linux")'.dependencies]
+webkit2gtk = { version = "2.0", optional = true }
+
+[dev-dependencies]
+tempfile = "3"

@@ -1,0 +1,57 @@
+name = "Light"
+appearance = "light"
+plot_palette = [
+  "#0072b2",
+  "#e69f00",
+  "#009e73",
+  "#cc79a7",
+  "#f0e442",
+  "#56b4e9",
+  "#d55e00",
+  "#334155",
+]
+
+[colors]
+bg-canvas = "#eef2f6"
+bg-panel = "#f7f9fc"
+bg-card = "#ffffff"
+bg-input = "#eef2f7"
+bg-hover = "#e5ebf3"
+bg-active = "#dbe4f0"
+border-subtle = "#d5dde8"
+border-strong = "#b4c0d0"
+focus-ring = "#1d4ed8"
+text-primary = "#111827"
+text-secondary = "#4b5563"
+text-muted = "#5b6675"
+text-on-accent = "#ffffff"
+accent-primary = "#1d4ed8"
+kind-spec = "#0284c7"
+kind-order = "#b45309"
+kind-line = "#059669"
+kind-launcher = "#6d28d9"
+kind-settings = "#475569"
+font-sans = "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
+font-mono = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+r-sm = "4px"
+r-md = "6px"
+r-lg = "8px"
+shadow-pop = "0 10px 24px rgba(15, 23, 42, 0.14)"
+anim-ms = "140ms"
+ui-scale = "1"
+
+[status.info]
+bg = "rgba(29, 78, 216, 0.10)"
+fg = "#1e40af"
+
+[status.success]
+bg = "rgba(5, 150, 105, 0.12)"
+fg = "#047857"
+
+[status.warn]
+bg = "rgba(180, 83, 9, 0.12)"
+fg = "#92400e"
+
+[status.error]
+bg = "rgba(220, 38, 38, 0.12)"
+fg = "#b91c1c"

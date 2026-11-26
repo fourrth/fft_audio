@@ -1,0 +1,28 @@
+[package]
+name = "fft_core"
+version = "0.13.0"
+edition = "2021"
+description = "UI-agnostic DSP, analysis and persistence core for fft_audio"
+
+[features]
+default = ["tables-text"]
+tables-text = ["dep:csv"]
+tables-parquet = ["dep:parquet", "dep:arrow"]
+tables-arrow = ["dep:arrow"]
+
+[dependencies]
+realfft = "3"                                          # FFT
+symphonia = { version = "0.6.1", features = ["all"] }  # decoding: wav, flac, mp3, ogg, aac, ...
+symphonia-opus = "0.1"                                 # pure-Rust Opus decoder (ogg, mkv, mp4)
+biquad = "0.5"                                         # IIR filters
+apodize = "1"                                          # window functions
+colorgrad = "0.6"                                      # color maps
+serde = { version = "1", features = ["derive"] }       # settings/theme/session (de)serialisation
+serde_json = { version = "1", features = ["preserve_order"] } # session.json + first-seen JSON table keys
+toml = "0.8"                                           # settings/theme file format
+dirs = "5"                                             # per-user config directory
+# data tables: a column becomes the signal.
+csv = { version = "1", optional = true }               # delimited text
+parquet = { version = "60", default-features = false, optional = true,
+            features = ["arrow", "snap", "brotli", "flate2-rust_backend", "lz4", "zstd"] }
+arrow = { version = "60", default-features = false, optional = true, features = ["ipc"] }

@@ -1,6 +1,5 @@
 **
 !/.gitignore
-!/CHANGELOG.md
 !/Cargo.toml
 !/README.md
 !/AGENTS.md
@@ -10,7 +9,6 @@
 !/pyrightconfig.json
 !/examples/
 !/examples/**
-!/build-web-static.sh
 !/crates/
 !/crates/**
 !/web/
@@ -19,6 +17,8 @@
 !/scripts/**
 !/.dsh/
 !/.dsh/**
+!/desktop_gui.png
+!/main_menu.png
 web/node_modules
 web/public/wasm
 web/dist

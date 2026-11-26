@@ -1,0 +1,240 @@
+.script-workspace,
+.script-runner {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-canvas);
+}
+
+.script-toolbar {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-panel);
+}
+
+.script-example-picker {
+  display: flex;
+  min-width: 0;
+}
+
+.script-example-picker select,
+.script-empty-example {
+  min-height: 26px;
+  max-width: 210px;
+  padding: 2px 6px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.script-empty-example {
+  max-width: none;
+}
+
+.script-example-hint {
+  flex: none;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--bg-panel) 82%, var(--bg-canvas));
+  color: var(--text-muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.script-example-hint code {
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.script-path {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.script-loading {
+  flex: none;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.script-editor {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-input);
+}
+
+.script-editor-status {
+  flex: none;
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-panel);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.script-dirty {
+  color: var(--status-warn-fg);
+}
+
+.script-editor-text {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  outline: none;
+  resize: none;
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  tab-size: 4;
+  overflow: auto;
+  white-space: pre;
+}
+
+.script-editor-text:read-only {
+  color: var(--text-muted);
+}
+
+.script-console-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-canvas);
+}
+
+.script-console-panel .script-console {
+  flex: 1;
+  min-height: 0;
+  margin: 8px;
+}
+
+.script-console-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.script-console-count {
+  min-width: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--bg-active);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-align: center;
+}
+
+.script-console-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.script-console-status {
+  padding: 0 4px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.script-console-status.status-running {
+  color: var(--accent-primary);
+}
+
+.script-console-status.status-finished {
+  color: var(--status-success-fg);
+}
+
+.script-console-status.status-failed {
+  color: var(--status-error-fg);
+}
+
+.script-console-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 560px;
+}
+
+.script-console {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  margin: 0 8px 8px;
+  padding: 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  background: #07090d;
+  color: #d7e0ee;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.script-runner-console {
+  margin: 8px;
+}
+
+.script-line {
+  display: flex;
+  gap: 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.script-line.stderr {
+  color: var(--status-error-fg);
+}
+
+.script-line.system {
+  color: var(--text-muted);
+}
+
+.script-time {
+  flex: none;
+  color: #5d6879;
+}
+
+.script-muted {
+  color: #687487;
+}
+
+.script-error {
+  padding: 8px 8px 0;
+}
+
+@media (max-width: 600px) {
+  .script-example-picker,
+  .script-example-picker select {
+    width: 100%;
+    max-width: none;
+  }
+}

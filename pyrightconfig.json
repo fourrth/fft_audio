@@ -1,0 +1,5 @@
+{
+  "include": ["examples"],
+  "extraPaths": ["crates/fft_python_adapter/src"],
+  "typeCheckingMode": "basic"
+}

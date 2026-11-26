@@ -1,0 +1,32 @@
+[workspace]
+members = [
+    "crates/fft_core",
+    "crates/fft_wasm",
+    "crates/fft_runtime",
+    "crates/fft_app",
+    "crates/fft_script",
+    "crates/fft_app_host",
+    "crates/fft_benchmarks",
+    "crates/fft_http_adapter",
+    "crates/fft_tauri_adapter",
+    "crates/fft_python_adapter",
+    "crates/fft_desktop",
+    "crates/fft_shipping",
+    "crates/fft_test",
+]
+default-members = [
+    "crates/fft_core",
+    "crates/fft_wasm",
+    "crates/fft_runtime",
+    "crates/fft_app",
+    "crates/fft_script",
+    "crates/fft_app_host",
+    "crates/fft_benchmarks",
+    "crates/fft_http_adapter",
+    "crates/fft_tauri_adapter",
+    "crates/fft_python_adapter",
+    "crates/fft_desktop",
+    "crates/fft_shipping",
+    "crates/fft_test",
+]
+resolver = "2"
